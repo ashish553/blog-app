@@ -1,0 +1,21 @@
+body{
+    background-color: #ececec;
+}
+.quillContainer, .inputContainer{
+    background: white;
+    .quill{
+        background-color: #ececec;
+    }
+    .ql-container{
+        border: 1px solid #eceff1;
+        width: 50%;
+        margin: auto;
+        margin-top: 20px;
+        border-radius: 1px;
+        height: 76vh;
+        background: white;
+    }
+    .ql-toolbar.ql-snow{
+        background-color: white;
+    }
+}

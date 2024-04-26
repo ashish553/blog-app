@@ -1,0 +1,92 @@
+{
+    "data": [
+            {
+                "id": "1",
+                "date": "2024-04-23",
+                "title": "Beginner's Guide to Python",
+                "author": "Jane Smith",
+                "description": "Explore Python from the basics to intermediate concepts in this comprehensive guide for beginners.",
+                "tags": ["Python", "Programming", "Education"]
+            },
+            {
+                "id": "2",
+                "date": "2024-04-24",
+                "title": "Data Structures in Java",
+                "author": "Alice Johnson",
+                "description": "Understanding data structures is crucial for effective problem-solving in Java programming.",
+                "tags": ["Java", "Data Structures", "Education"]
+            },
+            {
+                "id": "3",
+                "date": "2024-04-25",
+                "title": "Front-End Development Simplified",
+                "author": "Bob Brown",
+                "description": "A practical approach to mastering HTML, CSS, and JavaScript for building modern web applications.",
+                "tags": ["Web Development", "HTML", "Education"]
+            },
+            {
+                "id": "4",
+                "date": "2024-04-26",
+                "title": "Demystifying CSS Grid and Flexbox",
+                "author": "Carol White",
+                "description": "Learn how to use CSS Grid and Flexbox to create responsive layouts on the web.",
+                "tags": ["CSS", "Web Design", "Education"]
+            },
+            {
+                "id": "5",
+                "date": "2024-04-27",
+                "title": "Getting Started with Node.js",
+                "author": "Dave Green",
+                "description": "An introduction to Node.js and its ecosystem for building scalable backend services.",
+                "tags": ["Node.js", "Backend Development", "Education"]
+            },
+            {
+                "id": "6",
+                "date": "2024-04-28",
+                "title": "REST API Design Best Practices",
+                "author": "Ella Matthews",
+                "description": "Explore the principles of designing scalable and maintainable REST APIs.",
+                "tags": ["API Design", "Web Development", "Education"]
+            },
+            {
+                "id": "7",
+                "date": "2024-04-29",
+                "title": "Understanding Asynchronous JavaScript",
+                "author": "Frank Thompson",
+                "description": "Discover asynchronous programming in JavaScript using callbacks, promises, and async/await.",
+                "tags": ["JavaScript", "Programming", "Education"]
+            },
+            {
+                "id": "8",
+                "date": "2024-04-30",
+                "title": "Introduction to Cloud Computing",
+                "author": "Grace Lee",
+                "description": "A beginner's guide to the fundamentals of cloud computing and its impact on modern businesses.",
+                "tags": ["Cloud Computing", "Technology", "Education"]
+            },
+            {
+                "id": "9",
+                "date": "2024-05-01",
+                "title": "Machine Learning for Absolute Beginners",
+                "author": "Harry Wells",
+                "description": "An entry-level guide to the basics of machine learning and its applications.",
+                "tags": ["Machine Learning", "AI", "Education"]
+            },
+            {
+                "id": "10",
+                "date": "2024-05-02",
+                "title": "Exploring Cybersecurity Fundamentals",
+                "author": "Irene Adler",
+                "description": "Learn about the critical aspects of cybersecurity and how to protect digital information.",
+                "tags": ["Cybersecurity", "Information Security", "Education"]
+            },
+            {
+                "id": "11",
+                "date": "2024-05-03",
+                "title": "The Essentials of Digital Marketing",
+                "author": "John Taylor",
+                "description": "Discover the key strategies and tools used in effective digital marketing.",
+                "tags": ["Digital Marketing", "Business", "Education"]
+            }
+        ]
+}
