@@ -1,12 +1,14 @@
-'use client'
+// 'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
+import { list } from "@vercel/blob";
 // import { useSelector } from "react-redux";
 
-export default function Home() {
+export default async function Home() {
   // const blogDetailsFromStore = useSelector(store=>store.blogDetails)
   // console.log(blogDetailsFromStore);
-
+  // const response = await list()
+  // console.log(response);
   return (
     // <ReduxProvider>
       <main className={styles.main}>

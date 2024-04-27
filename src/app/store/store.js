@@ -5,7 +5,7 @@ const blogSlice = require("./blogSlice");
 import blogreducer from './blogSlice';
 
 const rootReducer = combineReducers({
-    blogreducer
+    blogDetails: blogreducer
 })
 
 const store = configureStore({

@@ -17,8 +17,8 @@ function Page() {
   const [Blogs, setBlogs] = useState([])
   const [currentTag, setcurrentTag] = useState(['All'])
   // console.log('tagslist',currentTag);
-  const blogDetailsFromStore = useAppSelector(store=>store)
-  console.log(blogDetailsFromStore);
+  // const data = useAppSelector(store=>store.blogDetails)
+  // console.log(data);
 
   useEffect(() => {
     function checkExist (eachBlog) {
