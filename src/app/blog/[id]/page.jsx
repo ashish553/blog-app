@@ -7,6 +7,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 import { useAppSelector } from '@/app/store/store';
 import { shallowEqual, useDispatch } from 'react-redux';
 import { updateBlogDetails, addTag } from '@/app/store/blogSlice';
+import Tag from '@/app/Components/Tag';
 
 
 function Page() {
@@ -98,20 +99,22 @@ function Page() {
           <div className="sm:mx-4 my-4 sm:my-0 sm:mt-0 tags-list-container flex flex-wrap flex-col sm:flex-row items-center">
             {
               blogDetails.tags.map((eachTag, index) => {
+                const id = Date.now()
                 return (
-                  <div key={index} className="my-1 sm:my-0 mx-2 tag rounded-3xl flex items-center px-3 h-4/5">
-                    <p className='text-sm mr-3 font-light'>{eachTag}</p>
-                    <button onClick={() => {
-                      const tempTags = [...blogDetails.tags]
-                      tempTags.splice(index, 1)
-                      setblogDetails({
-                        ...blogDetails,
-                        tags: tempTags
-                      })
-                    }} className="shrink-0 grow-0 delete text-sm border-2 text-center w-6 rounded-full h-6 border-teal-600 bg-teal-600 text-white font-semibold">
-                      x
-                    </button>
-                  </div>
+                  <Tag {...{setblogDetails,eachTag,blogDetails,id,index}} key={index} />
+                  // <div key={index} className="transition-all ease-in-out duration-500 -translate-y-1 border-2 border-teal-600 my-1 sm:my-0 mx-2 tag rounded-3xl flex items-center px-2 h-4/5">
+                  //   <p className='text-sm mr-3 font-light'>{eachTag}</p>
+                  //   <button onClick={() => {
+                  //     const tempTags = [...blogDetails.tags]
+                  //     tempTags.splice(index, 1)
+                  //     setblogDetails({
+                  //       ...blogDetails,
+                  //       tags: tempTags
+                  //     })
+                  //   }} className="shrink-0 grow-0 delete text-sm border-2 text-center w-6 rounded-full h-6 border-teal-600 bg-teal-600 text-white font-semibold">
+                  //     x
+                  //   </button>
+                  // </div>
 
                 )
               })

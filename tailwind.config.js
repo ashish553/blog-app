@@ -12,6 +12,9 @@ module.exports = {
     extend: {
       colors: {
         'aquamarine': '#7fffd4',
+      },
+      letterSpacing: {
+        'extra-wide': '0.5rem',
       }
     },
   },
