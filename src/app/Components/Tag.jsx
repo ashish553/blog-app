@@ -64,7 +64,7 @@ function Tag({ eachTag, setblogDetails, blogDetails, index }) {
     };
 
     return (
-        <div ref={tagref} id={index} className="border-2 border-teal-600 my-1 sm:my-0 mx-2 tag rounded-3xl flex items-center px-2 h-4/5">
+        <div ref={tagref} id={index} className="border-2 border-teal-600 my-1 sm:my-0 mx-2 tag rounded-3xl flex items-center px-2 h-4/5 bg-aquamarine">
             <p className='text-sm mr-3 font-light'>{eachTag}</p>
             <button onClick={handleRemoveTag} className="shrink-0 grow-0 delete text-sm border-2 text-center w-6 rounded-full h-6 border-teal-600 bg-teal-600 text-white font-semibold">
                 x

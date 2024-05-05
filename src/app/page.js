@@ -2,6 +2,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { list } from "@vercel/blob";
+import { cookies } from "next/headers";
 // import { useSelector } from "react-redux";
 
 export default async function Home() {
@@ -9,6 +10,7 @@ export default async function Home() {
   // console.log(blogDetailsFromStore);
   // const response = await list()
   // console.log(response);
+  // console.log(cookies().get('usr_profile'));
   return (
     // <ReduxProvider>
       <main className={styles.main}>

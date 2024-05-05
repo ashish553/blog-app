@@ -1,15 +1,17 @@
 import { cookies } from "next/headers";
+import { decrypt } from "./src/app/lib/auth";
 
-const { decrypt } = require("@/app/lib/auth");
+// const { decrypt } = require("./lib/auth");
+// decry
 const { NextResponse } = require("next/server");
 
 export default async function middleware(req) {
     console.log('in middleware');
-    const protectedRoutes = ['/create']
+    const protectedRoutes = ['/create','/home']
     // console.log(req.nextUrl);
     const path = req.nextUrl.pathname
     const isProtected = protectedRoutes.includes(path)
-
+ 
     const cookie = cookies().get('session')?.value
     console.log(cookie);
     const session = await decrypt(cookie)
@@ -19,6 +21,8 @@ export default async function middleware(req) {
     if(!session && isProtected) {
             console.log(isProtected);
         return NextResponse.redirect(new URL('/login',req.nextUrl))        
+    } else if(session && path==='/login') {
+        return NextResponse.redirect(new URL('/',req.nextUrl))
     }
 
     return NextResponse.next()
@@ -27,5 +31,5 @@ export default async function middleware(req) {
 
 export const config = {
     // matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-    matcher: ['/create'],
+    matcher: ['/create','/home','/login'],
 }

@@ -1,5 +1,6 @@
 "use server"
 
+import { redirect } from "next/navigation";
 import { decrypt, encrypt,signUp, verifyUser } from "./lib/auth";
 import { createSession } from "./lib/session";
 
@@ -31,15 +32,18 @@ export async function login(formData) {
         const sessionToken = await encrypt({userID})
         
         // 3. create the sesssion from that JWT and store in cookies
-        await createSession(sessionToken)
-        return 'Logged in successfully'
+        await createSession(sessionToken,userID)
+        redirect('/')
+        return {status: 200, msg: 'Login Successfull'}
     } else {
-        return 'Username or Password is invalid'
+        return {status: 400, msg: 'Invalid username or password'}
+        // return 'Username or Password is invalid'
     }
 
 }
 
 export async function handleSignUp(signUpDetails) {
-    await signUp(signUpDetails)
+    const res = await signUp(signUpDetails)
+    return res
     // console.log('312123123');
 }

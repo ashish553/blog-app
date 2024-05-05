@@ -28,25 +28,10 @@ export async function decrypt(session) {
     }
 }
 
-// export async function login(formData) {
-//     console.log(formData.get('username'));
-//     console.log(formData.get('password'));
-//     // 1. Check if the user exist in the db
-//     // .
-//     // .
-//     // .
-//     let userID = ''
-
-//     if(true) userID = formData.username
-
-//     // 2. Generate a JWT using jose pkg
-//     const sessionToken = await encrypt({userID})
-    
-//     // 3. create the sesssion from that JWT and store in cookies
-//     await createSession(sessionToken)
-// }
 
 export async function signUp(credentials) {
+
+    const errorMsg = {23505: 'Username already exist'}
     // console.log(credentials);
     try {
         const hashedPassword = bcrypt.hashSync(credentials.password,10)
@@ -54,12 +39,15 @@ export async function signUp(credentials) {
         await sql`INSERT INTO userss (username, password) VALUES (${credentials.username},${hashedPassword})`;
         console.log('Users Data pushed successfully:');
         // console.log({title,desc,tagsData,date,blob: blob.url, previewDesc});
-        return Response.json(credentials)
+        return {status: 200, msg: `${credentials.username} registered successfully!`}
 
     } catch (error) {
         console.log(error.msg);
-        console.log(error);
-        return Response.json({ msg: 'Error' })
+        console.log(Object.keys(error));
+        return { 
+                 status: '500',
+                 msg: errorMsg[error.code]
+         }
     }
 }
 

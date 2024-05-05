@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react'
 import 'react-quill/dist/quill.snow.css';
-import '@/app/assets/scss/blogpage.scss'
+import '../assets/scss/blogpage.scss'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { updateBlogDetails } from '../store/blogSlice';
 import { useAppSelector } from '../store/store';
