@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+'use client'
+import React, { useContext, useEffect, useState } from 'react'
 // import logo from '/assets/img/logo.JPG'
 import logo from '../assets/img/logoNew.png'
 // import logo1 from '../assets/img/nocap-logo.png'
@@ -6,20 +7,49 @@ import logo1 from '../assets/img/another.png'
 import Image from 'next/image'
 import Link from 'next/link'
 import gsap from 'gsap'
+import { UserProfileCtx } from '../context/userprofile'
+import { deleteCookies, getCookies } from '../actions'
+import { useRouter } from 'next/navigation'
+import { LoggedCtx } from '../context/Logged'
+// import { redirect } from 'next/dist/server/api-utils'
 
 function Header() {
-  
-  const navTimeline = gsap.timeline({paused: true})
-  const navLinksTimeline = gsap.timeline({paused: true})
+  const {loggedin,setloggedin} = useContext(LoggedCtx)
+  const route = useRouter()
+  async function logout() {
+    await deleteCookies()
+    route.push('/')
+    setloggedin(false)
+    // setuserProfile()
+  }
+  const { userProfile, setuserProfile } = useContext(UserProfileCtx)
+  // console.log('profileVlaue',profileData);
+
+  const navTimeline = gsap.timeline({ paused: true })
+  const navLinksTimeline = gsap.timeline({ paused: true })
+
+  // const v = useContext(UserProfileCtx)
+  // console.log(v);
 
   useEffect(() => {
-    navTimeline.fromTo('#mobile-navContainer',{
+    async function setUserContext() {
+      const cookies = await getCookies()
+      // console.log(cookies?.userId);
+      cookies?.userId && setuserProfile({ ...{ name: cookies?.userId } })
+      cookies?.userId && setloggedin(true)
+    }
+    setUserContext()
+  },[loggedin])
+
+  useEffect(() => {
+    
+    navTimeline.fromTo('#mobile-navContainer', {
       display: 'none',
       opacity: 0,
       ease: 'power3.inOut',
       duration: '1',
       xPercent: 50
-    },{
+    }, {
       display: 'flex',
       opacity: 1,
       ease: 'power3.inOut',
@@ -27,40 +57,30 @@ function Header() {
       xPercent: 0
     })
 
-    navLinksTimeline.fromTo('.navLinks',{
+    navLinksTimeline.fromTo('.navLinks', {
       opacity: 0,
       yPercent: -100,
       ease: 'power3.inOut',
       duration: '0.8',
-    },{
+    }, {
       opacity: 1,
       yPercent: 0,
       ease: 'power3.inOut',
       duration: '0.7',
     })
-  
+    // setUserContext()
+
   }, [])
-  
+
   function showMobileNav() {
+    console.log('called animation gsap');
     navTimeline.play()
     navLinksTimeline.play()
-    // navTimeline.to('#mobile-navContainer',{
-    //   display: 'flex',
-    //   opacity: 1,
-    //   ease: 'power3.inOut',
-    //   duration: '1'
-    // })
   }
 
   function closeMobileNav() {
     navLinksTimeline.reverse()
     navTimeline.reverse()
-    // navTimeline.to('#mobile-navContainer',{
-    //   display: 'none',
-    //   opacity: 0,
-    //   ease: 'power3.inOut',
-    //   duration: '1'
-    // })
   }
 
   return (
@@ -81,12 +101,19 @@ function Header() {
             <Link href="/create">CREATE</Link>
           </div>
         </div>
-        <div className='max-[768px]:hidden'>
+        {loggedin && <div className='max-[768px]:hidden'>
           <div>
-            Ashish
-            <button className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
+            {userProfile.name}
+            <button onClick={logout} className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
           </div>
-        </div>
+        </div>}
+        {!loggedin && <div className='max-[768px]:hidden'>
+          <div>
+            <div className='text-xl text-white transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
+              <Link href="/login">LOGIN</Link>
+            </div>
+          </div>
+        </div>}
         <div className='hidden max-[768px]:block'>
           <div>
             <button onClick={showMobileNav} className='ml-4 bg-gray-600 text-white transition-all easi-in-out duration-100 text-white border border-gray-600 px-2 py-1 text-xs rounded-md active:border-white'>+</button>
@@ -106,21 +133,29 @@ function Header() {
         </div>
         <div className='flex flex-col justify-between text-white mt-10 text-2xl items-center font-semibold'>
           <div className='navLinks mx-4 my-1'>
-            <Link href="/">HOME</Link>
+            <Link href="/" onClick={closeMobileNav}>HOME</Link>
           </div>
           <div className='navLinks mx-4 my-1'>
-            <Link href="/blogs">BLOGS</Link>
+            <Link href="/blogs" onClick={closeMobileNav}>BLOGS</Link>
           </div>
           <div className='navLinks mx-4 my-1'>
-            <Link href="/create">CREATE</Link>
+            <Link href="/create" onClick={closeMobileNav}>CREATE</Link>
           </div>
+          {!userProfile.name && <>
+            <div className='navLinks mx-4 my-1'>
+              <Link href="/login" onClick={closeMobileNav}>LOGIN</Link>
+            </div>
+            <div className='navLinks mx-4 my-1'>
+              <Link href="/signup" onClick={closeMobileNav}>SIGN UP</Link>
+            </div>
+          </>}
         </div>
-        <div className='navLinks'>
+        {loggedin && <div className='navLinks'>
           <div className='mt-10'>
-            Ashish
+            {userProfile.name}
             <button className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
           </div>
-        </div>
+        </div>}
 
       </div>
     </div>

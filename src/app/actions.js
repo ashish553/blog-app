@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { decrypt, encrypt,signUp, verifyUser } from "./lib/auth";
-import { createSession } from "./lib/session";
+import { createSession,deleteSession,getSession } from "./lib/session";
 
 export async function testActions() {
     console.log(process.browser);
@@ -33,7 +33,7 @@ export async function login(formData) {
         
         // 3. create the sesssion from that JWT and store in cookies
         await createSession(sessionToken,userID)
-        redirect('/')
+        // redirect('/')
         return {status: 200, msg: 'Login Successfull'}
     } else {
         return {status: 400, msg: 'Invalid username or password'}
@@ -46,4 +46,14 @@ export async function handleSignUp(signUpDetails) {
     const res = await signUp(signUpDetails)
     return res
     // console.log('312123123');
+}
+
+export async function getCookies() {
+    const session = await getSession()
+    return session?.value && JSON.parse(session.value)
+}
+
+export async function deleteCookies() {
+    await deleteSession()
+    // return session?.value && JSON.parse(session.value)
 }

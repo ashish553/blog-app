@@ -9,7 +9,7 @@ import Card from '../Components/Card'
 import BlogFilter from '../Components/BlogFilter'
 import blogs from '../Constants/dummyBlogs.json'
 import { sql } from '@vercel/postgres';
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import { useAppSelector } from '../store/store'
 
 

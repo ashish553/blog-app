@@ -1,13 +1,16 @@
-// 'use client'
+'use client'
 
-import React from 'react'
+import React, { useContext } from 'react'
 // import { login } from '../lib/auth'
 import { login } from '../actions'
 import Input from './Input'
 import { redirect } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
+import { UserProfileCtx } from '../context/userprofile'
+import { LoggedCtx } from '../context/Logged'
 
 function LoginForm() {
+    const {setloggedin} = useContext(LoggedCtx)
     function callToastMsg(result) {
         result.status === 200 ? toast.success(result.msg, {
             position: "top-center",
@@ -37,9 +40,12 @@ function LoginForm() {
                 const res = await login(formData)
                 console.log(res);
                 // console.log(result);
+                const name = formData.get('username')
+                console.log(name);
+                res.status === 200 && setloggedin(true);
                 // setresult(res)
                 callToastMsg(res)
-                // redirect('/')
+                redirect('/')
 
             }} className='flex flex-col'>
                 {/* <label htmlFor="username" className='mt-4 mb-3'>Username</label> */}

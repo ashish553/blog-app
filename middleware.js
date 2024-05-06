@@ -1,8 +1,10 @@
 import { cookies } from "next/headers";
 import { decrypt } from "./src/app/lib/auth";
+import { useContext } from "react";
 
 // const { decrypt } = require("./lib/auth");
 // decry
+
 const { NextResponse } = require("next/server");
 
 export default async function middleware(req) {
@@ -21,7 +23,7 @@ export default async function middleware(req) {
     if(!session && isProtected) {
             console.log(isProtected);
         return NextResponse.redirect(new URL('/login',req.nextUrl))        
-    } else if(session && path==='/login') {
+    } else if(session && (path==='/login' || path==='/signup')) {
         return NextResponse.redirect(new URL('/',req.nextUrl))
     }
 
@@ -31,5 +33,5 @@ export default async function middleware(req) {
 
 export const config = {
     // matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-    matcher: ['/create','/home','/login'],
+    matcher: ['/create','/home','/login','/blog'],
 }
