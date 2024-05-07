@@ -9,6 +9,7 @@ import ReduxProvider from "./store/redux-provider";
 import Header from './Components/Header'
 import UserProfile, { UserProfileCtx } from "./context/userprofile";
 import Logged, { LoggedCtx } from "./context/Logged";
+import { ToastContainer } from "react-toastify";
 
 gsap.registerPlugin(useGSAP)
 

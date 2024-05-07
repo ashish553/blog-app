@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { decrypt, encrypt,signUp, verifyUser } from "./lib/auth";
 import { createSession,deleteSession,getSession } from "./lib/session";
+import { sql } from "@vercel/postgres";
 
 export async function testActions() {
     console.log(process.browser);
@@ -56,4 +57,11 @@ export async function getCookies() {
 export async function deleteCookies() {
     await deleteSession()
     // return session?.value && JSON.parse(session.value)
+}
+
+export async function getBlogDetails(id) {
+    const {rows} = await sql`SELECT * from blogs WHERE blog_id=${id}`
+    // console.log(rows);
+    return rows[0]
+
 }

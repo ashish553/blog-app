@@ -3,7 +3,7 @@
 const { cookies } = require("next/headers");
 
 export async function createSession(sessionToken,userId) {
-    const expires = new Date(Date.now() + 20 * 1000);
+    const expires = new Date(Date.now() + 60 * 60 * 1000);
     cookies().set('session', sessionToken, {
         httpOnly: true,
         secure: true,
@@ -33,7 +33,7 @@ export async function updateSession() {
       return null
     }
    
-    const expires = new Date(Date.now() + 10 * 1000)
+    const expires = new Date(Date.now() + 60 * 60 * 1000)
     cookies().set('session', session, {
       httpOnly: true,
       secure: true,

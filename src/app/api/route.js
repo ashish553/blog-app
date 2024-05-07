@@ -23,7 +23,8 @@ export async function POST(request) {
     const imgExtension = image.name.split('.').pop()
     const imageId = v4()
     const tagsData = `{"${tags.replace(',','","')}"}`
-
+    // ['a','b','c']
+    // ["'a'","'b'","'c'"]
     let blob = ''
 
     try {

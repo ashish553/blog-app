@@ -5,19 +5,9 @@ import React, { useState } from 'react'
 import { handleSignUp, login, testActions } from '../actions'
 import Input from './Input'
 import {toast } from 'react-toastify'
-
-// import { signUp } from '../lib/auth'
+import Link from 'next/link'
 
 function SignUp() {
-    // function handleSubmit(e) {
-    //     e.preventDefault()
-    //     const formData = new FormData(e.target)
-    //     const fData = Object.fromEntries(formData)
-    //     console.log(fData);
-    //     // console.log(process.browser);
-    //     // login(fData)
-    //     // console.log(123);
-    // }
   const [signUpDetails, setsignUpDetails] = useState({
     username: '',
     password: '',
@@ -33,9 +23,6 @@ function SignUp() {
     })
   }
   async function handlesubmit(signUpDetails,setspin) {
-    // 'use server'
-    // e.preventDefault()
-    // setspin(true)
     console.log(signUpDetails);
     const result = await handleSignUp(signUpDetails)
     console.log('res', result);
@@ -63,7 +50,7 @@ function SignUp() {
     // setspin(false)
   }
   return (
-      <div className={`transition-all duration-300 hover:-translate-y-1 hover:translate-x-1 eease-in-out ${signUpDetails.password===signUpDetails.cpassword ? 'hover:shadow-[-5px_5px_10px_0px_rgba(109,40,217)]' : 'hover:shadow-[-5px_5px_10px_0px_rgba(255,0,0)]'} shadow-md max-[450px]:w-8/12 md:w-4/12 lg:w-3/12 mx-auto h-fit flex justify-center items-center flex-col py-10 px-12 rounded-2xl bg-lavender`}>
+      <div className={`transition-all duration-300 hover:-translate-y-1 hover:translate-x-1 eease-in-out ${signUpDetails.password===signUpDetails.cpassword ? 'hover:shadow-[-5px_5px_0px_0px_rgba(109,40,217)]' : 'hover:shadow-[-5px_5px_0px_0px_rgba(255,0,0)]'} shadow-md max-[450px]:w-8/12 md:w-4/12 lg:w-3/12 mx-auto h-fit flex justify-center items-center flex-col py-10 px-12 rounded-2xl bg-lavender`}>
           <div className='text-center mb-6'>Sign Up</div>
           <form onSubmit={async (e)=>{
                 e.preventDefault()
@@ -82,6 +69,7 @@ function SignUp() {
                 }
                 
               </button>
+              <p className='mt-3 text-center text-sm'>Already have an account? <span className='hover:text-[blue]'><Link href='/login'>Login</Link></span></p>
           </form>
       </div>
   )

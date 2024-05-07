@@ -14,7 +14,7 @@ import { LoggedCtx } from '../context/Logged'
 // import { redirect } from 'next/dist/server/api-utils'
 
 function Header() {
-  const {loggedin,setloggedin} = useContext(LoggedCtx)
+  const { loggedin, setloggedin } = useContext(LoggedCtx)
   const route = useRouter()
   async function logout() {
     await deleteCookies()
@@ -29,7 +29,7 @@ function Header() {
   const navLinksTimeline = gsap.timeline({ paused: true })
 
   // const v = useContext(UserProfileCtx)
-  // console.log(v);
+  // console.log(v);npm run dev
 
   useEffect(() => {
     async function setUserContext() {
@@ -39,10 +39,10 @@ function Header() {
       cookies?.userId && setloggedin(true)
     }
     setUserContext()
-  },[loggedin])
+  }, [loggedin])
 
   useEffect(() => {
-    
+
     navTimeline.fromTo('#mobile-navContainer', {
       display: 'none',
       opacity: 0,
@@ -85,44 +85,50 @@ function Header() {
 
   return (
     // <div className="relative">
-    <div className='navContainer'>
-      <div className='z-10 sticky top-0 px-5 w-full h-20 bg-[#a0a0eb] flex justify-between items-center'>
-        <div className='imageContaner'>
-          <Image src={logo1} alt='asd' width={80} height={80} className='rounded-full' />
-        </div>
-        <div className='max-[768px]:hidden flex justify-between text-white text-xl font-light'>
-          <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
-            <Link href="/">HOME</Link>
+    <>
+      <div className='top-0 bg-[#232222] sticky w-full z-20 navContainer'>
+        <div className='px-5 w-full h-20 flex justify-between items-center'>
+          <div className='imageContaner'>
+            <Link href="/">
+              <Image src={logo1} alt='asd' width={60} height={60} className='rounded-2xl' />
+            </Link>
           </div>
-          <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
-            <Link href="/blogs">BLOGS</Link>
-          </div>
-          <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
-            <Link href="/create">CREATE</Link>
-          </div>
-        </div>
-        {loggedin && <div className='max-[768px]:hidden'>
-          <div>
-            {userProfile.name}
-            <button onClick={logout} className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
-          </div>
-        </div>}
-        {!loggedin && <div className='max-[768px]:hidden'>
-          <div>
-            <div className='text-xl text-white transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
-              <Link href="/login">LOGIN</Link>
+          <div className='max-[768px]:hidden flex justify-between text-white text-xl font-light'>
+            <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
+              <Link href="/">HOME</Link>
+            </div>
+            <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
+              <Link href="/blogs">BLOGS</Link>
+            </div>
+            <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
+              <Link href="/create">CREATE</Link>
             </div>
           </div>
-        </div>}
-        <div className='hidden max-[768px]:block'>
-          <div>
-            <button onClick={showMobileNav} className='ml-4 bg-gray-600 text-white transition-all easi-in-out duration-100 text-white border border-gray-600 px-2 py-1 text-xs rounded-md active:border-white'>+</button>
+          {loggedin && <div className='max-[768px]:hidden'>
+            <div>
+              <span className='text-white'>
+                {userProfile.name}
+              </span>
+              <button onClick={logout} className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
+            </div>
+          </div>}
+          {!loggedin && <div className='max-[768px]:hidden'>
+            <div>
+              <div className='text-xl text-white transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
+                <Link href="/login">LOGIN</Link>
+              </div>
+            </div>
+          </div>}
+          <div className='hidden max-[768px]:block'>
+            <div>
+              <button onClick={showMobileNav} className='ml-4 bg-gray-600 text-white transition-all easi-in-out duration-100 text-white border border-gray-600 px-2 py-1 text-xs rounded-md active:border-white'>+</button>
+            </div>
           </div>
         </div>
-      </div>
-      {/* <button className="ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white" onClick={showMobileNav}>++</button> */}
+        {/* <button className="ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white" onClick={showMobileNav}>++</button> */}
 
-      <div id="mobile-navContainer" className="navContainer h-full w-full hidden absolute mobileHeader flex-col items-center justify-start">
+      </div>
+      <div id="mobile-navContainer" className="bg-[#232222] navContainer h-full w-full hidden absolute mobileHeader flex-col items-center justify-start">
         <div className='flex justify-between w-full px-4 items-center'>
           <Image src={logo1} alt='asd' width={80} height={80} className='rounded-full mb-4 mt-5' />
           <div className='hidden max-[768px]:block mt-4'>
@@ -152,13 +158,15 @@ function Header() {
         </div>
         {loggedin && <div className='navLinks'>
           <div className='mt-10'>
-            {userProfile.name}
+            <span className='text-white'>
+              {userProfile.name}
+            </span>
             <button className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
           </div>
         </div>}
 
       </div>
-    </div>
+    </>
   )
 }
 

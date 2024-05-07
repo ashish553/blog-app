@@ -39,7 +39,7 @@ function Page() {
   }, [currentTag])
   
   return (
-    <>
+    <div>
       <div className='w-full flex justify-center items-center flex-col'>
         <BlogFilter currentTagFunc={setcurrentTag} currentTag={currentTag}/>
         {/* <p className='mt-5 mb-4 text-xl font-light'>Found {Blogs.length} blogs</p> */}
@@ -54,7 +54,7 @@ function Page() {
           }
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
