@@ -9,7 +9,7 @@ const { NextResponse } = require("next/server");
 
 export default async function middleware(req) {
     console.log('in middleware');
-    const protectedRoutes = ['/create','/home']
+    const protectedRoutes = ['/create','/home','/dashboard']
     // console.log(req.nextUrl);
     const path = req.nextUrl.pathname
     const isProtected = protectedRoutes.includes(path)
@@ -33,5 +33,5 @@ export default async function middleware(req) {
 
 export const config = {
     // matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-    matcher: ['/create','/home','/login','/blog'],
+    matcher: ['/create','/home','/login','/blog', '/dashboard'],
 }

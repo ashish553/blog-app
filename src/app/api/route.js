@@ -18,6 +18,7 @@ export async function POST(request) {
     const tags = blogData.get('tags')
     const date = blogData.get('date')
     const image = blogData.get('image')
+    const author = blogData.get('author')
 
 
     const imgExtension = image.name.split('.').pop()
@@ -35,7 +36,7 @@ export async function POST(request) {
     }
     if(blob){
         try {
-            await sql`INSERT INTO blogs (title, description, tags, publisheddate, image, prevdescription) VALUES (${title},${desc},${tagsData},${date},${blob.url},${previewDesc})`;
+            await sql`INSERT INTO blogs (title, description, tags, publisheddate, image, prevdescription, author) VALUES (${title},${desc},${tagsData},${date},${blob.url},${previewDesc},${author})`;
             console.log('Data pushed successfully:');
             console.log({title,desc,tagsData,date,blob: blob.url, previewDesc});
             return Response.json({title,desc,tagsData,date,blob: blob.url, previewDesc})

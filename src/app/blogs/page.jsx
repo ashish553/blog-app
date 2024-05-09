@@ -8,9 +8,6 @@ import React, { useEffect, useState } from 'react'
 import Card from '../Components/Card'
 import BlogFilter from '../Components/BlogFilter'
 import blogs from '../Constants/dummyBlogs.json'
-import { sql } from '@vercel/postgres';
-import { shallowEqual, useSelector } from 'react-redux'
-import { useAppSelector } from '../store/store'
 
 
 function Page() {
@@ -19,6 +16,7 @@ function Page() {
   // console.log('tagslist',currentTag);
   // const data = useAppSelector(store=>store.blogDetails)
   // console.log(data);
+  let image1 = 'https://images.unsplash.com/photo-1496979551903-46e46589a88b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cda12b505afa1beb06e49d89014cbd65&auto=format&fit=crop&w=634&q=80' 
 
   useEffect(() => {
     function checkExist (eachBlog) {
@@ -49,7 +47,7 @@ function Page() {
               const date = new Date(eachBlog.date)
               const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
               const blogDate = [formattedDate.split(', ')[1], ...formattedDate.split(', ')[0].split(' ')]
-              return <Card key={eachBlog.id} id={`blog-${eachBlog.id}`} blogDate={blogDate} heading={eachBlog.title} desc={eachBlog.description} blogtags={eachBlog.tags}/>
+              return <Card key={eachBlog.id} id={`blog-${eachBlog.id}`} blogDate={blogDate} heading={eachBlog.title} desc={eachBlog.description} blogtags={eachBlog.tags} image={image1}/>
             })
           }
         </div>

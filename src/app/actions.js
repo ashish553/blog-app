@@ -65,3 +65,10 @@ export async function getBlogDetails(id) {
     return rows[0]
 
 }
+
+export async function getBlogsByUser(username) {
+    const {rows} = await sql`SELECT * from blogs WHERE author=${username}`
+    // console.log(rows);
+    return rows
+
+}

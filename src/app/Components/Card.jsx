@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import React, { useEffect, useRef } from 'react'
 
 
-function Card({ id, heading, desc, blogtags, blogDate }) {
+function Card({ id, heading, desc, blogtags, blogDate, image }) {
     // console.log(blogDate);
     const card1 = gsap.timeline({ paused: true })
     const tag = gsap.timeline({ paused: true })
@@ -63,7 +63,7 @@ function Card({ id, heading, desc, blogtags, blogDate }) {
     };
 
     return (
-        <div id={id} className="opacity-0 box m-4 shadow-lg hover:shadow-xl" tabIndex='0' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onFocus={handleMouseEnter} onBlur={handleMouseLeave}>
+        <div id={id} style={{ backgroundImage: `url(${image})` }} className={" opacity-0 box m-4 shadow-lg hover:shadow-xl"} tabIndex='0' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onFocus={handleMouseEnter} onBlur={handleMouseLeave}>
             <div className="tag w-1/6 p-3 flex flex-col absolute items-center">
                 <p className="day text-center font-bold text-lg">{blogDate[2]}</p>
                 <p className="text-center text-xs">{blogDate[1]}</p>

@@ -1,18 +1,15 @@
 'use client';
 import '../assets/scss/input.scss'
-// import '../../'
 import RichTextEditor from '../Components/RichTextEditor'
-import React, { useState } from 'react'
-// import { sql } from '@vercel/postgres';
+import React, { useContext, useState } from 'react'
 import { unstable_noStore as noStore } from 'next/cache';
-// import { useAppSelector } from '@/app/store/store';
-// import { shallowEqual, useDispatch } from 'react-redux';
-// import { updateBlogDetails, addTag } from '@/app/store/blogSlice';
 import Tag from '../Components/Tag';
-
+import { UserProfileCtx } from '../context/userprofile'
 
 function Page() {
   noStore()
+  const {userProfile} = useContext(UserProfileCtx)
+  console.log('userProfile',userProfile);
   const [tag, setTag] = useState()
   const [blogDetails, setblogDetails] = useState({
     title: '',
@@ -32,19 +29,12 @@ function Page() {
     formData.append('tags', blogDetails.tags)
     formData.append('image', blogDetails.image)
     formData.append('date', blogDetails.date)
+    formData.append('author', userProfile.name)
     const res = await fetch('/api', {
       method: 'POST',
       body: formData,
     })
-    // console.log(await (res.json()));
   }
-  // const {initialData}= useDispatch()
-  // const data = useAppSelector(store=>store.blogDetails,shallowEqual)
-  // console.log(data);
-  // const tags = JSON.stringify(['Javacript','Web Dev'])
-  // await sql`INSERT INTO blogs (title, description, tags, publisheddate, image) VALUES ('Test1 title','Test desc','{"Javacript","Web Dev"}','2024-04-29','https://cronuts.digital/wp-content/uploads/2020/04/Artboard-11-1536x1086.png')`;
-  // const {rows} =  await sql`SELECT * FROM blogs`;
-  // console.log(rows);
   return (
     <div className='text-2xl'>
       <div className="inputContainer px-3 flex items-center flex-col">
@@ -103,19 +93,6 @@ function Page() {
                 const id = Date.now()
                 return (
                   <Tag {...{setblogDetails,eachTag,blogDetails,id,index}} key={index} />
-                  // <div key={index} className="transition-all ease-in-out duration-500 -translate-y-1 border-2 border-teal-600 my-1 sm:my-0 mx-2 tag rounded-3xl flex items-center px-2 h-4/5">
-                  //   <p className='text-sm mr-3 font-light'>{eachTag}</p>
-                  //   <button onClick={() => {
-                  //     const tempTags = [...blogDetails.tags]
-                  //     tempTags.splice(index, 1)
-                  //     setblogDetails({
-                  //       ...blogDetails,
-                  //       tags: tempTags
-                  //     })
-                  //   }} className="shrink-0 grow-0 delete text-sm border-2 text-center w-6 rounded-full h-6 border-teal-600 bg-teal-600 text-white font-semibold">
-                  //     x
-                  //   </button>
-                  // </div>
 
                 )
               })
