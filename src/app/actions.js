@@ -72,3 +72,25 @@ export async function getBlogsByUser(username) {
     return rows
 
 }
+
+export async function updateBlogDetails(id, details) {
+    const tagsData = `{"${details.tags.toString().replaceAll(',','","')}"}`
+    const res = await sql`
+        UPDATE blogs
+        SET title = ${details.title}, description = ${details.desc}, prevdescription = ${details.previewDesc}, tags = ${tagsData}
+        WHERE blog_id = ${id}
+    `
+    console.log(res);
+    return res
+
+}
+
+export async function deleteBlogDetails(id) {
+    const res = await sql`
+        DELETE FROM blogs
+        WHERE blog_id = ${id}
+    `
+    console.log(res);   
+    return res
+
+}

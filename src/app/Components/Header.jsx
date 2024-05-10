@@ -103,6 +103,9 @@ function Header() {
             <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
               <Link href="/create">CREATE</Link>
             </div>
+            {loggedin && <div className='transition ease-in-out duration-300 mx-4 border-b-2 border-transparent hover:border-white'>
+              <Link href="/dashboard">DASHBOARD</Link>
+            </div>}
           </div>
           {loggedin && <div className='max-[768px]:hidden'>
             <div>

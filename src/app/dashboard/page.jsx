@@ -17,7 +17,7 @@ function Page() {
       console.log(userProfile.name);
       const data = await getBlogsByUser(userProfile.name)
       console.log(data);
-      setblogs(data)
+      data !== blogs && setblogs(data)
     }
     
     fetchDetials()
@@ -40,7 +40,7 @@ function Page() {
               const blogDate = [formattedDate.split(', ')[1], ...formattedDate.split(', ')[0].split(' ')]
 
               return (
-                <Card id={`blog-${blog.blog_id}`} key={blog.blog_id} heading={blog.title} desc={blog.prevdescription} blogtags={blog.tags} blogDate={blogDate} image={blog.image}/>
+                <Card id={`blog-${blog.blog_id}`} key={blog.blog_id} heading={blog.title} desc={blog.prevdescription} blogtags={blog.tags} blogDate={blogDate} image={blog.image} isDashboard={true} setBlogs={setblogs} blogs={blogs}/>
               )
             })}
           </div>       
