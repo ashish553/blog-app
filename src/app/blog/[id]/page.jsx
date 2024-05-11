@@ -11,10 +11,10 @@ export default async function Page({params}) {
         <div className="articleContainer w-full pt-10">
             <div className="w-5/6 mx-auto text-white">
 
-                <div className="text-white text-3xl font-light">{data.title}</div>
+                <div className="text-white text-3xl font-light text-center mb-20">{data.title}</div>
                 
                 <div>
-                <Image src={data.image} alt='banner image' width={100} height={100} className='rounded-2xl' />
+                {/* <Image src={data.image} alt='banner image' width={100} height={100} className='rounded-2xl' /> */}
 
                 </div>
                 

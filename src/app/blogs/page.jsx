@@ -1,14 +1,12 @@
 
 'use client'
 
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-// gsap.registerPlugin(useGSAP)
 import React, { useEffect, useState } from 'react'
 import Card from '../Components/Card'
 import BlogFilter from '../Components/BlogFilter'
 import blogs from '../Constants/dummyBlogs.json'
-
+import { getBlogs } from '../actions'
+import CardShimmer from '../Components/CardShimmer'
 
 function Page() {
   const [Blogs, setBlogs] = useState([])
@@ -16,25 +14,36 @@ function Page() {
   // console.log('tagslist',currentTag);
   // const data = useAppSelector(store=>store.blogDetails)
   // console.log(data);
-  let image1 = 'https://images.unsplash.com/photo-1496979551903-46e46589a88b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cda12b505afa1beb06e49d89014cbd65&auto=format&fit=crop&w=634&q=80' 
+  
 
   useEffect(() => {
-    function checkExist (eachBlog) {
-      for (let index = 0; index < currentTag.length; index++) {
-        if(eachBlog.tags.includes(currentTag[index])){
-          return true
+    (async ()=>{
+      setBlogs([])
+      const blogs = await getBlogs()
+      // setBlogs([...blogs])
+      function checkExist (eachBlog) {
+        for (let index = 0; index < currentTag.length; index++) {
+          if(eachBlog.tags.includes(currentTag[index])){
+            return true
+          }
         }
       }
-    }
-    if(currentTag.includes("All")){
-      setBlogs([...blogs.data])
-    } else {
-      const blogListTemp = blogs.data.filter(eachBlog => {
-        return checkExist(eachBlog)
-      });
-      setBlogs([...blogListTemp])
-    }
+      if(currentTag.includes("All")){
+        setBlogs([...blogs])
+      } else {
+        const blogListTemp = blogs.filter(eachBlog => {
+          return checkExist(eachBlog)
+        });
+        setBlogs([...blogListTemp])
+      }
+
+    })()
   }, [currentTag])
+  
+
+  // useEffect(() => {
+    
+  // }, [currentTag])
   
   return (
     <div>
@@ -43,11 +52,13 @@ function Page() {
         {/* <p className='mt-5 mb-4 text-xl font-light'>Found {Blogs.length} blogs</p> */}
         <div className='blog-card-container w-11/12 flex flex-wrap justify-center'>
           {
-            Blogs && Blogs.map(eachBlog=>{
-              const date = new Date(eachBlog.date)
+            Blogs.length ? Blogs.map(eachBlog=>{
+              const date = new Date(eachBlog.publisheddate)
               const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
               const blogDate = [formattedDate.split(', ')[1], ...formattedDate.split(', ')[0].split(' ')]
-              return <Card key={eachBlog.id} id={`blog-${eachBlog.id}`} blogDate={blogDate} heading={eachBlog.title} desc={eachBlog.description} blogtags={eachBlog.tags} image={image1}/>
+              return <Card key={eachBlog.blog_id} id={`blog-${eachBlog.blog_id}`} blogDate={blogDate} heading={eachBlog.title} desc={eachBlog.prevdescription} blogtags={eachBlog.tags} image={eachBlog.image}/>
+            }) : new Array(3).fill(null).map((each,index)=>{
+              return <CardShimmer key={index}/>
             })
           }
         </div>

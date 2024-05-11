@@ -94,3 +94,17 @@ export async function deleteBlogDetails(id) {
     return res
 
 }
+
+export async function getBlogs() {
+    const {rows} = await sql`SELECT * from blogs`
+    // console.log(rows);
+    return rows
+
+}
+
+export async function getBlogsByTag() {
+    const {rows} = await sql`SELECT * from blogs`
+    // console.log(rows);
+    return rows
+
+}

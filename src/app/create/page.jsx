@@ -5,11 +5,12 @@ import React, { useContext, useState } from 'react'
 import { unstable_noStore as noStore } from 'next/cache';
 import Tag from '../Components/Tag';
 import { UserProfileCtx } from '../context/userprofile'
+import { toast } from 'react-toastify';
 
 function Page() {
   noStore()
-  const {userProfile} = useContext(UserProfileCtx)
-  console.log('userProfile',userProfile);
+  const { userProfile } = useContext(UserProfileCtx)
+  console.log('userProfile', userProfile);
   const [tag, setTag] = useState()
   const [blogDetails, setblogDetails] = useState({
     title: '',
@@ -23,17 +24,54 @@ function Page() {
   const publish = async () => {
     console.log(JSON.stringify(blogDetails));
     const formData = new FormData()
-    formData.append('title', blogDetails.title)
-    formData.append('desc', blogDetails.desc)
-    formData.append('previewDesc', blogDetails.previewDesc)
-    formData.append('tags', blogDetails.tags)
-    formData.append('image', blogDetails.image)
-    formData.append('date', blogDetails.date)
-    formData.append('author', userProfile.name)
-    const res = await fetch('/api', {
-      method: 'POST',
-      body: formData,
-    })
+    if (blogDetails.title, blogDetails.desc, blogDetails.previewDesc, blogDetails.tags, blogDetails.image) {
+
+      formData.append('title', blogDetails.title)
+      formData.append('desc', blogDetails.desc)
+      formData.append('previewDesc', blogDetails.previewDesc)
+      formData.append('tags', blogDetails.tags)
+      formData.append('image', blogDetails.image)
+      formData.append('date', blogDetails.date)
+      formData.append('author', userProfile.name)
+      const result = await fetch('/api', {
+        method: 'POST',
+        body: formData,
+      })
+      console.log(result);
+      const res = await result.json()
+      console.log(res);
+
+      res.status === 200 ? toast.success(res.msg, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }) : toast.error(res.msg, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+    } else {
+      toast.error('Please fill all the fields', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+    }
   }
   return (
     <div className='text-2xl'>
@@ -57,7 +95,7 @@ function Page() {
           <label htmlFor="previewDesc" className='transition ease-in-out left-0 absolute bottom-4 text-sm font-light peer-focus:-translate-y-5 peer-valid:-translate-y-5 text-gray-400'>Short Description</label>
         </div>
         <div className="previewContainer relative flex w-full mt-10">
-          <input onChange={(e)=>{
+          <input onChange={(e) => {
             setblogDetails({
               ...blogDetails,
               image: e.target.files[0],
@@ -92,14 +130,14 @@ function Page() {
               blogDetails.tags.map((eachTag, index) => {
                 const id = Date.now()
                 return (
-                  <Tag {...{setblogDetails,eachTag,blogDetails,id,index}} key={index} />
+                  <Tag {...{ setblogDetails, eachTag, blogDetails, id, index }} key={index} />
 
                 )
               })
             }
           </div>
         </div>
-        
+
         <div className='h-fit'>
           <button className="rounded bg-aquamarine px-5 py-3 text-sm" onClick={publish}>Publish</button>
         </div>

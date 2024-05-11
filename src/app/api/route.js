@@ -39,12 +39,12 @@ export async function POST(request) {
             await sql`INSERT INTO blogs (title, description, tags, publisheddate, image, prevdescription, author) VALUES (${title},${desc},${tagsData},${date},${blob.url},${previewDesc},${author})`;
             console.log('Data pushed successfully:');
             console.log({title,desc,tagsData,date,blob: blob.url, previewDesc});
-            return Response.json({title,desc,tagsData,date,blob: blob.url, previewDesc})
+            return Response.json({status: 200, msg: 'Blog published successfully'})
 
         } catch (error) {
             console.log(error.msg);
             console.log(error);
-            return Response.json({ msg: 'Error' })
+            return Response.json({ status: 500, msg: 'Error' })
         }
     }
 

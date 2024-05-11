@@ -29,8 +29,11 @@ export default function RootLayout({ children }) {
           <UserProfile>
             <body className={inter.className}>
               <Header />
+              <ToastContainer />
               {/* <main> */}
-              {children}
+              {/* <div className="backdrop-blur"> */}
+                {children}
+              {/* </div> */}
               {/* </main> */}
             </body>
           </UserProfile>
