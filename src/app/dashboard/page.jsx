@@ -18,7 +18,7 @@ function Page() {
       console.log(userProfile.name);
       const data = await getBlogsByUser(userProfile.name)
       console.log(data);
-      data !== blogs && setblogs(data)
+      data ? setblogs(data) : setblogs([])
     }
 
     fetchDetials()
@@ -30,7 +30,7 @@ function Page() {
     <div className='p-5'>
       <div className="w-5/6 m-auto">
         <div className="mt-4 text-xl text-white">
-          My Blogs ({blogs.length})
+          My Blogs ({blogs ? blogs.length : 0})
         </div>
         <div className='blog-card-container w-11/12 flex flex-wrap justify-center'>
           {
