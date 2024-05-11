@@ -11,7 +11,7 @@ function Page() {
 
   const { userProfile } = useContext(UserProfileCtx)
   // const {rows} = await sql`SELECT * from blogs WHERE blog_id=${id}`
-  const [blogs, setblogs] = useState([])
+  const [blogs, setblogs] = useState(null)
 
   useEffect(() => {
     async function fetchDetials() {
@@ -34,7 +34,7 @@ function Page() {
         </div>
         <div className='blog-card-container w-11/12 flex flex-wrap justify-center'>
           {
-            blogs.length ? blogs.map(blog => {
+            blogs ? blogs.map(blog => {
 
               const date = new Date(blog.publisheddate)
               const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
