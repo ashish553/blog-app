@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 const { configureStore, combineReducers } = require("@reduxjs/toolkit");
 const blogSlice = require("./blogSlice");
 import blogreducer from './blogSlice';
+import userSlice from './userdetails';
 
 const rootReducer = combineReducers({
-    blogreducer
+    // blogDetails: blogreducer,
+    userDetails: userSlice,
 })
 
 const store = configureStore({

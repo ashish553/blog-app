@@ -14,6 +14,12 @@ body{
         border-radius: 1px;
         height: 76vh;
         background: white;
+        @media screen and (max-width: 768px) {
+            width: 95%;
+        }
+        @media screen and (min-width: 769px) and (max-width: 1200px){
+            width: 75%;
+        }
     }
     .ql-toolbar.ql-snow{
         background-color: white;

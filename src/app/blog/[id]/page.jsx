@@ -1,49 +1,25 @@
-// 'use client';
-import '@/app/assets/scss/input.scss'
-import RichTextEditor from '@/app/Components/RichTextEditor'
-import React from 'react'
-import { sql } from '@vercel/postgres';
-import { unstable_noStore as noStore } from 'next/cache';
+import React from "react";
+import { getBlogDetails } from "../../actions";
+import Image from "next/image";
+import '../../assets/scss/article.scss'
 
-async function Page() {
-  // noStore()
-  // const tags = JSON.stringify(['Javacript','Web Dev'])
-  // await sql`INSERT INTO blogs (title, description, tags, publisheddate, image) VALUES ('Test1 title','Test desc','{"Javacript","Web Dev"}','2024-04-29','https://cronuts.digital/wp-content/uploads/2020/04/Artboard-11-1536x1086.png')`;
-  // const {rows} =  await sql`SELECT * FROM blogs`;
-  // console.log(rows);
-  return (
-    <div className='text-2xl'>
-      <div className="inputContainer px-3 flex items-center flex-col">
-        <div className="form__group group field">
-          <input type="input" className="text-xl font-light form__field" placeholder="Name" name="name" id='name' required />
-          <label htmlFor="name" className="form__label text-sm font-light">Title</label>
-        </div>
-        <div className='relative mt-5 flex group w-1/4 mr-auto'>
-          <input type="text" name="tags" id="tags" className='py-2 border-b border-gray-400 peer outline-none text-base font-light mt-3' required/>
-          <label htmlFor="tags" className='transition ease-in-out left-0 absolute bottom-4 text-sm font-light peer-focus:-translate-y-5 peer-valid:-translate-y-5 text-gray-400'>Tags</label>
-          <button className="ml-3 mt-3 transition ease-in-out duration-200 text-base bg-aquamarine rounded-full w-fit h-fit py-1.5 px-3 border-2 border-teal-400 hover:border-teal-600 border-2 active:bg-teal-300">
-            +
-          </button>
-          <div className="mx-4 tags-list-container flex flex-wrap items-center">
-            <div className="tag rounded-3xl flex items-center px-3 h-4/5">
-              <p className='text-sm mr-3 font-light'>Javacript</p>
-              <div className="shrink-0 grow-0 delete text-sm border-2 text-center w-6 rounded-full h-6 border-teal-600 bg-teal-600 text-white font-semibold">
-                x
-              </div>
+export default async function Page({params}) {
+    console.log(params.id);
+    const data = await getBlogDetails(params.id)
+    return (
+        // <div className="h-full text-white text-3xl">HEY</div>
+        <div className="articleContainer w-full pt-10">
+            <div className="w-5/6 mx-auto text-white">
+
+                <div className="text-white text-3xl font-light text-center mb-20">{data.title}</div>
+                
+                <div>
+                {/* <Image src={data.image} alt='banner image' width={100} height={100} className='rounded-2xl' /> */}
+
+                </div>
+                
+                <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
             </div>
-          </div>
-
         </div>
-        {/* <div className='h-fit'>
-          <button className="rounded bg-aquamarine px-5 py-3 text-sm">Publish</button>
-        </div> */}
-      </div>
-      <div className='quillContainer'>
-        <RichTextEditor />
-      </div>
-    </div>
-  )
+    )
 }
-
-export default Page
-export const dynamic = 'force-dynamic';
