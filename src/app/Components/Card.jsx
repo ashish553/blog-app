@@ -85,7 +85,7 @@ function Card({ id, heading, desc, blogtags, blogDate, image, isDashboard, setBl
     };
 
     return (
-        <div id={id} style={{ backgroundImage: `url(${image})` }} className={" opacity-0 box m-4 shadow-lg hover:shadow-xl"} tabIndex='0' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onFocus={handleMouseEnter} onBlur={handleMouseLeave}>
+        <div id={id} style={{ backgroundImage: `url(${image})` }} className={"bg-cover opacity-0 box m-4 shadow-lg hover:shadow-xl"} tabIndex='0' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onFocus={handleMouseEnter} onBlur={handleMouseLeave}>
             <div className="tag w-1/6 p-3 flex flex-col absolute items-center">
                 <p className="day text-center font-bold text-lg">{blogDate[2]}</p>
                 <p className="text-center text-xs">{blogDate[1]}</p>
@@ -98,7 +98,9 @@ function Card({ id, heading, desc, blogtags, blogDate, image, isDashboard, setBl
                     {blogtags.map((eachtag, index) => <p key={index} className="bg-aquamarine text-xs py-1 px-4 mr-2 mb-1 cursor-default">{eachtag}</p>)}
                 </div>
                 <div className="heading-container">
-                    <h1 className='text-2xl font-extralight mb-5'>{heading}</h1>
+                    <Link href={`/blog/${id.split('-')[1]}`}>
+                        <h2 className='text-2xl font-extralight mb-5'>{heading}</h2>
+                    </Link>
                 </div>
                 <div className='flex flex-col justify-between description opacity-0 h-0'>
                     <p>{desc}</p>

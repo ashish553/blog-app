@@ -108,3 +108,9 @@ export async function getBlogsByTag() {
     return rows
 
 }
+
+export async function getTags() {
+    const {rows} = await sql`SELECT tags from blogs`;
+    // console.log(rows);
+    return rows
+}

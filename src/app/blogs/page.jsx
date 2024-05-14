@@ -5,19 +5,17 @@ import React, { useEffect, useState } from 'react'
 import Card from '../Components/Card'
 import BlogFilter from '../Components/BlogFilter'
 import blogs from '../Constants/dummyBlogs.json'
-import { getBlogs } from '../actions'
+import { getBlogs, getTags } from '../actions'
 import CardShimmer from '../Components/CardShimmer'
 
 function Page() {
-  const [Blogs, setBlogs] = useState([])
+  const [Blogs, setBlogs] = useState(null)
   const [currentTag, setcurrentTag] = useState(['All'])
-  // console.log('tagslist',currentTag);
-  // const data = useAppSelector(store=>store.blogDetails)
-  // console.log(data);
   
 
   useEffect(() => {
     (async ()=>{
+      
       setBlogs([])
       const blogs = await getBlogs()
       // setBlogs([...blogs])
@@ -52,7 +50,7 @@ function Page() {
         {/* <p className='mt-5 mb-4 text-xl font-light'>Found {Blogs.length} blogs</p> */}
         <div className='blog-card-container w-11/12 flex flex-wrap justify-center'>
           {
-            Blogs.length ? Blogs.map(eachBlog=>{
+            Blogs ? Blogs.map(eachBlog=>{
               const date = new Date(eachBlog.publisheddate)
               const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
               const blogDate = [formattedDate.split(', ')[1], ...formattedDate.split(', ')[0].split(' ')]

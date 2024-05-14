@@ -75,7 +75,7 @@ function Page() {
   }
   return (
     <div className='text-2xl'>
-      <div className="inputContainer px-3 flex items-center flex-col">
+      <div className="inputContainer px-3 pb-5 flex items-center flex-col">
         <div className="form__group group field">
           <input type="input" onChange={(e) => {
             setblogDetails({
