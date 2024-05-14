@@ -1,22 +1,23 @@
-// 'use client'
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
-import { list } from "@vercel/blob";
-import { cookies } from "next/headers";
-// import { useSelector } from "react-redux";
-import Shimmer from './Components/CardShimmer'
+import './assets/scss/hero.scss'
+import gsap from "gsap";
+import { useState, useEffect } from "react";
+import Hero from './Components/Hero'
+import LatestBlogs from './Components/LatestBlogs'
+import { getBlogs } from "./actions";
+import Join  from './Components/Join'
 
-export default async function Home() {
-  // const blogDetailsFromStore = useSelector(store=>store.blogDetails)
-  // console.log(blogDetailsFromStore);
-  // const response = await list()
-  // console.log(response);
-  // console.log(cookies().get('usr_profile'));
+export default function Home() {
   return (
     // <ReduxProvider>
-      <main className={styles.main}>
-        <h1 className="mt-5 text-3xl text-white text-center font-light">Home</h1>
-      </main>
+    <main className={styles.main}>
+      <Hero />
+      <LatestBlogs />
+      <Join />
+
+    </main>
     // </ReduxProvider>
   );
 }

@@ -3,3 +3,22 @@
       color: aquamarine !important;
     }
   }
+
+body{
+  background: rgb(35 35 35);
+}
+
+img{
+  margin: 1.5rem auto;
+}
+
+@media screen and (max-width: 768px) {
+  p{
+    text-align: justify;
+  }
+}
+
+h2,h3 {
+  margin-top: 1rem;
+  // margin-bottom: 0.5rem;
+}

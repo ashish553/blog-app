@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 // import logo from '/assets/img/logo.JPG'
 import logo from '../assets/img/logoNew.png'
 // import logo1 from '../assets/img/nocap-logo.png'
@@ -23,18 +23,13 @@ function Header() {
     // setuserProfile()
   }
   const { userProfile, setuserProfile } = useContext(UserProfileCtx)
-  // console.log('profileVlaue',profileData);
 
-  const navTimeline = gsap.timeline({ paused: true })
-  const navLinksTimeline = gsap.timeline({ paused: true })
-
-  // const v = useContext(UserProfileCtx)
-  // console.log(v);npm run dev
+  const navTimeline = useRef(gsap.timeline({ paused: true }))
+  const navLinksTimeline = useRef(gsap.timeline({ paused: true }))
 
   useEffect(() => {
     async function setUserContext() {
       const cookies = await getCookies()
-      // console.log(cookies?.userId);
       cookies?.userId && setuserProfile({ ...{ name: cookies?.userId } })
       cookies?.userId && setloggedin(true)
     }
@@ -43,7 +38,7 @@ function Header() {
 
   useEffect(() => {
 
-    navTimeline.fromTo('#mobile-navContainer', {
+    navTimeline.current.fromTo('#mobile-navContainer', {
       display: 'none',
       opacity: 0,
       ease: 'power3.inOut',
@@ -57,16 +52,16 @@ function Header() {
       xPercent: 0
     })
 
-    navLinksTimeline.fromTo('.navLinks', {
+    navLinksTimeline.current.fromTo('.navLinks', {
       opacity: 0,
       yPercent: -100,
-      ease: 'power3.inOut',
-      duration: '0.8',
+      ease: 'none',
+      duration: '0.3',
     }, {
       opacity: 1,
       yPercent: 0,
-      ease: 'power3.inOut',
-      duration: '0.7',
+      ease: 'none',
+      duration: '0.3',
     })
     // setUserContext()
 
@@ -74,17 +69,21 @@ function Header() {
 
   function showMobileNav() {
     console.log('called animation gsap');
-    navTimeline.play()
-    navLinksTimeline.play()
+    navTimeline.current.play().then(() => {
+      navLinksTimeline.current.play();
+    }).catch(error => {
+      console.error('Error reversing navLinksTimeline');
+    });
   }
-
   function closeMobileNav() {
-    navLinksTimeline.reverse()
-    navTimeline.reverse()
+    navLinksTimeline.current.reverse().then(() => {
+      navTimeline.current.reverse();
+    }).catch(error => {
+      console.error('Error reversing navLinksTimeline:', error);
+    });
   }
 
   return (
-    // <div className="relative">
     <>
       <div className='top-0 bg-[#232222] sticky w-full z-20 navContainer'>
         <div className='px-5 w-full h-20 flex justify-between items-center'>
@@ -124,7 +123,12 @@ function Header() {
           </div>}
           <div className='hidden max-[768px]:block'>
             <div>
-              <button onClick={showMobileNav} className='ml-4 bg-gray-600 text-white transition-all easi-in-out duration-100 text-white border border-gray-600 px-2 py-1 text-xs rounded-md active:border-white'>+</button>
+              <button onClick={showMobileNav} className='ml-4 text-white transition-all easi-in-out duration-100 text-white px-2 py-1 text-xs rounded-md active:border-white'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+
+              </button>
             </div>
           </div>
         </div>
@@ -136,7 +140,12 @@ function Header() {
           <Image src={logo1} alt='asd' width={80} height={80} className='rounded-full mb-4 mt-5' />
           <div className='hidden max-[768px]:block mt-4'>
             <div>
-              <button onClick={closeMobileNav} className='bg-gray-600 text-white transition-all ease-in-out duration-100 text-white border border-gray-600 px-4 py-1 text-xs rounded-md active:border-white'>{'<-'}</button>
+              <button onClick={closeMobileNav} className='text-white transition-all ease-in-out duration-100 text-white px-4 py-1 text-xs rounded-md active:border-white'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+
+              </button>
             </div>
           </div>
         </div>
@@ -150,6 +159,9 @@ function Header() {
           <div className='navLinks mx-4 my-1'>
             <Link href="/create" onClick={closeMobileNav}>CREATE</Link>
           </div>
+          {loggedin && <div className='navLinks mx-4 my-1'>
+            <Link href="/dashboard" onClick={closeMobileNav}>DASHBOARD</Link>
+          </div>}
           {!userProfile.name && <>
             <div className='navLinks mx-4 my-1'>
               <Link href="/login" onClick={closeMobileNav}>LOGIN</Link>
@@ -159,14 +171,14 @@ function Header() {
             </div>
           </>}
         </div>
-        {loggedin && <div className='navLinks'>
-          <div className='mt-10'>
+        <div className='navLinks'>
+          {loggedin && <div className='mt-10'>
             <span className='text-white'>
               {userProfile.name}
             </span>
             <button className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
-          </div>
-        </div>}
+          </div>}
+        </div>
 
       </div>
     </>

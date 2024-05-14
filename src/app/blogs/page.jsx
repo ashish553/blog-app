@@ -5,19 +5,17 @@ import React, { useEffect, useState } from 'react'
 import Card from '../Components/Card'
 import BlogFilter from '../Components/BlogFilter'
 import blogs from '../Constants/dummyBlogs.json'
-import { getBlogs } from '../actions'
+import { getBlogs, getTags } from '../actions'
 import CardShimmer from '../Components/CardShimmer'
 
 function Page() {
   const [Blogs, setBlogs] = useState(null)
   const [currentTag, setcurrentTag] = useState(['All'])
-  // console.log('tagslist',currentTag);
-  // const data = useAppSelector(store=>store.blogDetails)
-  // console.log(data);
   
 
   useEffect(() => {
     (async ()=>{
+      
       setBlogs([])
       const blogs = await getBlogs()
       // setBlogs([...blogs])
