@@ -30,8 +30,8 @@ function Header() {
   useEffect(() => {
     async function setUserContext() {
       const cookies = await getCookies()
-      cookies?.userId && setuserProfile({ ...{ name: cookies?.userId } })
-      cookies?.userId && setloggedin(true)
+      cookies?.userId ? setuserProfile({ ...{ name: cookies?.userId } }) : setuserProfile({})
+      cookies?.userId ? setloggedin(true) : setloggedin(false)
     }
     setUserContext()
   }, [loggedin])
@@ -123,7 +123,7 @@ function Header() {
           </div>}
           <div className='hidden max-[768px]:block'>
             <div>
-              <button onClick={showMobileNav} className='ml-4 text-white transition-all easi-in-out duration-100 text-white px-2 py-1 text-xs rounded-md active:border-white'>
+              <button onClick={showMobileNav} className='active:bg-gray-400 ml-4 text-white transition-all easi-in-out duration-100 text-white px-2 py-1 text-xs rounded-md active:border-white'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -132,7 +132,6 @@ function Header() {
             </div>
           </div>
         </div>
-        {/* <button className="ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white" onClick={showMobileNav}>++</button> */}
 
       </div>
       <div id="mobile-navContainer" className="bg-[#232222] navContainer h-full w-full hidden absolute mobileHeader flex-col items-center justify-start">
@@ -140,7 +139,7 @@ function Header() {
           <Image src={logo1} alt='asd' width={80} height={80} className='rounded-full mb-4 mt-5' />
           <div className='hidden max-[768px]:block mt-4'>
             <div>
-              <button onClick={closeMobileNav} className='text-white transition-all ease-in-out duration-100 text-white px-4 py-1 text-xs rounded-md active:border-white'>
+              <button onClick={closeMobileNav} className='active:bg-gray-400 text-white transition-all ease-in-out duration-100 text-white px-4 py-1 text-xs rounded-md active:border-white'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
@@ -159,24 +158,32 @@ function Header() {
           <div className='navLinks mx-4 my-1'>
             <Link href="/create" onClick={closeMobileNav}>CREATE</Link>
           </div>
-          {loggedin && <div className='navLinks mx-4 my-1'>
-            <Link href="/dashboard" onClick={closeMobileNav}>DASHBOARD</Link>
-          </div>}
-          {!userProfile.name && <>
-            <div className='navLinks mx-4 my-1'>
-              <Link href="/login" onClick={closeMobileNav}>LOGIN</Link>
-            </div>
-            <div className='navLinks mx-4 my-1'>
-              <Link href="/signup" onClick={closeMobileNav}>SIGN UP</Link>
-            </div>
-          </>}
+          <div className="navLinks">
+            {loggedin && <div className='mx-4 my-1'>
+              <Link href="/dashboard" onClick={closeMobileNav}>DASHBOARD</Link>
+            </div>}
+          </div>
+          <div className='navLinks text-center'>
+            {!userProfile.name && <>
+              <div className='mx-4 my-1'>
+                <Link href="/login" onClick={closeMobileNav}>LOGIN</Link>
+              </div>
+              <div className='mx-4 my-1'>
+                <Link href="/signup" onClick={closeMobileNav}>SIGN UP</Link>
+              </div>
+            </>}
+          </div>
         </div>
         <div className='navLinks'>
           {loggedin && <div className='mt-10'>
             <span className='text-white'>
               {userProfile.name}
             </span>
-            <button className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
+            <button onClick={async () => {
+              await logout()
+              closeMobileNav()
+
+            }} className='ml-4 bg-rose-600 text-white transition-all easi-in-out duration-100 text-white border border-rose-600 px-2 py-1 text-xs rounded-md active:border-white'>Logout</button>
           </div>}
         </div>
 

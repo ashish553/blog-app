@@ -28,11 +28,11 @@ function Page() {
 
   return (
     <div className='p-5'>
-      <div className="w-5/6 m-auto">
+      <div className="w-full md:w-5/6 m-auto">
         <div className="mt-4 text-xl text-white">
           My Blogs ({blogs ? blogs.length : 0})
         </div>
-        <div className='blog-card-container w-11/12 flex flex-wrap justify-center'>
+        <div className='blog-card-container flex flex-wrap justify-center'>
           {
             blogs ? blogs.map(blog => {
 
